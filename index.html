@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小鹏汇天陆地航母 - 分体式飞行汽车深度调研</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        xpeng: '#0066FF',
+                        darkbg: '#12141A',
+                        darkcard: '#1E222D',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .text-shadow {
+                text-shadow: 0 2px 10px rgba(0,0,0,0.6);
+            }
+            .scroll-smooth {
+                scroll-behavior: smooth;
+            }
+            .fade-in {
+                opacity: 0;
+                transform: translateY(20px);
+                transition: all 0.6s ease-out;
+            }
+            .fade-in.active {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            background-color: #12141A;
+        }
+    </style>
+</head>
+<body class="bg-darkbg text-gray-200 font-sans">
+<!-- 高级滚动光效背景层  -->
+<div class="bg-effect fixed inset-0 -z-10 pointer-events-none">
+  <div class="glow-1 absolute w-[600px] h-[600px] rounded-full bg-blue-600/15 blur-[120px] top-[10%] left-[15%]"></div>
+  <div class="glow-2 absolute w-[500px] h-[500px] rounded-full bg-cyan-500/10 blur-[140px] top-[50%] right-[10%]"></div>
+  <div class="glow-3 absolute w-[450px] h-[450px] rounded-full bg-indigo-600/8 blur-[100px] bottom-[10%] left-[40%]"></div>
+</div>
+
+<style>
+.bg-effect {
+  background-color: #000000; /* 底色保持纯黑 */
+}
+/* 滚动动画：向下滚动，光晕缓慢上浮，视差效果 */
+.glow-1, .glow-2, .glow-3 {
+  transition: transform 0.12s ease-out;
+}
+</style>
+
+<script>
+// 滚动视差逻辑
+window.addEventListener('scroll', () => {
+  const scrollY = window.scrollY;
+  document.querySelector('.glow-1').style.transform = `translateY(${scrollY * -0.12}px)`;
+  document.querySelector('.glow-2').style.transform = `translateY(${scrollY * -0.08}px)`;
+  document.querySelector('.glow-3').style.transform = `translateY(${scrollY * -0.15}px)`;
+})
+</script>
+
+    <!-- 顶部导航栏 -->
+    <nav class="fixed top-0 left-0 w-full z-50 bg-darkbg/90 backdrop-blur-md border-b border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="text-xl font-bold text-xpeng">小鹏分体式飞行汽车</div>
+            <div class="hidden md:flex gap-5 text-sm">
+                <a href="#overview" class="hover:text-xpeng transition-colors">产品概览</a>
+                <a href="#subsystem" class="hover:text-xpeng transition-colors">子系统拆解</a>
+                <a href="#tech" class="hover:text-xpeng transition-colors">关键技术</a>
+                <a href="#feasibility-tech" class="hover:text-xpeng transition-colors">技术可行性</a>
+                <a href="#scenario" class="hover:text-xpeng transition-colors">应用场景</a>
+                <a href="#market" class="hover:text-xpeng transition-colors">市场可行性</a>
+                <a href="#summary" class="hover:text-xpeng transition-colors">行业展望</a>
+                <a href="#reference" class="hover:text-xpeng transition-colors">参考文献</a>
+            </div>
+            <button id="menuBtn" class="md:hidden text-xl">
+                <i class="fa fa-bars"></i>
+            </button>
+        </div>
+        <!-- 移动端菜单 -->
+        <div id="mobileMenu" class="hidden md:hidden px-4 pb-4 flex flex-col gap-3 text-sm">
+            <a href="#overview" class="hover:text-xpeng transition-colors">产品概览</a>
+            <a href="#subsystem" class="hover:text-xpeng transition-colors">子系统拆解</a>
+            <a href="#tech" class="hover:text-xpeng transition-colors">关键技术</a>
+            <a href="#feasibility-tech" class="hover:text-xpeng transition-colors">技术可行性</a>
+            <a href="#scenario" class="hover:text-xpeng transition-colors">应用场景</a>
+            <a href="#market" class="hover:text-xpeng transition-colors">市场可行性</a>
+            <a href="#summary" class="hover:text-xpeng transition-colors">行业展望</a>
+            <a href="#reference" class="hover:text-xpeng transition-colors">参考文献</a>
+        </div>
+    </nav>
+
+    <!-- Hero首屏Banner -->
+    <section class="relative h-screen flex items-center justify-center overflow-hidden pt-16">
+        <div class="absolute inset-0 z-0">
+            <img src="https://picsum.photos/id/1031/1920/1080" alt="小鹏陆地航母效果图" class="w-full h-full object-cover opacity-35">
+        </div>
+        <div class="relative z-10 text-center px-6 max-w-5xl fade-in">
+            <h1 class="text-[clamp(2rem,5vw,4rem)] font-bold text-white text-shadow mb-4">小鹏汇天「陆地航母」</h1>
+            <p class="text-[clamp(1.1rem,2vw,1.5rem)] text-gray-100 text-shadow mb-2">XPENG AEROHT Land Aircraft Carrier</p>
+            <p class="text-lg text-gray-300 mb-8">全球首创可自动收纳分体eVTOL系统 · 深度调研分析</p>
+            <div class="flex justify-center">
+                <iframe width="100%" height="480" src="https://player.bilibili.com/player.html?isOutside=true&aid=117251785100277&bvid=BV1KEYE6UEas&cid=41790800332&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" class="rounded-lg shadow-xl max-w-full" title="小鹏陆地航母测试"></iframe>
+            </div>
+            <a href="#overview" class="inline-block mt-8 text-xpeng animate-bounce text-3xl">
+                <i class="fa fa-angle-down"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- 区块2：产品概览 -->
+    <section id="overview" class="max-w-7xl mx-auto px-4 py-24 fade-in">
+        <h2 class="text-3xl font-bold text-white border-l-4 border-xpeng pl-4 mb-10">产品概览</h2>
+        <div class="grid md:grid-cols-2 gap-10 items-center">
+            <div>
+                <h3 class="text-xl font-semibold text-white mb-4">产品基础信息</h3>
+                <p class="mb-4 leading-relaxed">
+                    产品全称：小鹏汇天 分体式飞行汽车「陆地航母（Land Aircraft Carrier）」
+                </p>
+                <p class="mb-4 leading-relaxed">
+                    研发主体：小鹏汇天 XPENG AEROHT（小鹏汽车生态企业，亚洲规模领先的飞行汽车全栈研发公司）
+                </p>
+                <p class="mb-4 leading-relaxed">
+                    产品定位：模块化分体式陆空一体化出行系统，区别于一体式飞行汽车；由陆行母舰（陆行体）+可分离折叠eVTOL飞行体两大独立单元组成；解决传统eVTOL三大痛点：飞行器运输难、停放难、补能难，陆行体本身是合法上路的四座乘用车+移动机库+移动补能站。
+                </p>
+                <p class="mb-4 leading-relaxed">
+                    公开节点：2023年10月首次发布概念；2024年广州车展实车亮相、珠海航展全球公开首飞；计划2026年启动规模化交付；广州建有专属飞行汽车智造基地，规划飞行体年产能1万台。
+                </p>
+            </div>
+            <div>
+                <img src="images/1.jpg" alt="小鹏陆地航母效果图" class="w-full h-full object-cover opacity-35">
+                <p class="text-gray-400 text-sm mt-2 text-center">图：陆行母舰与飞行体同框实拍</p>
+            </div>
+        </div>
+
+        <div class="mt-16">
+            <h3 class="text-xl font-semibold text-white mb-6">总体性能参数</h3>
+            <div class="overflow-x-auto">
+                <table class="w-full border-collapse">
+                    <thead>
+                        <tr class="bg-darkcard">
+                            <th class="border border-gray-700 px-4 py-3 text-left">项目</th>
+                            <th class="border border-gray-700 px-4 py-3 text-left">陆行体（母舰）</th>
+                            <th class="border border-gray-700 px-4 py-3 text-left">飞行体（eVTOL）</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-sm">
+                        <tr class="hover:bg-darkcard/60 transition">
+                            <td class="border border-gray-700 px-4 py-3">外形尺寸</td>
+                            <td class="border border-gray-700 px-4 py-3">长5.5m / 宽2m / 高2m，可进标准车位、地下车库</td>
+                            <td class="border border-gray-700 px-4 py-3">六轴六桨双涵道构型，机臂、桨叶可折叠收纳</td>
+                        </tr>
+                        <tr class="hover:bg-darkcard/60 transition">
+                            <td class="border border-gray-700 px-4 py-3">乘员</td>
+                            <td class="border border-gray-700 px-4 py-3">4座（地面乘坐）</td>
+                            <td class="border border-gray-700 px-4 py-3">2座载人，270°全景座舱</td>
+                        </tr>
+                        <tr class="hover:bg-darkcard/60 transition">
+                            <td class="border border-gray-700 px-4 py-3">驾驶资质</td>
+                            <td class="border border-gray-700 px-4 py-3">C1驾照即可合法驾驶</td>
+                            <td class="border border-gray-700 px-4 py-3">飞行模式：飞行员执照/空域开放后支持自动驾驶</td>
+                        </tr>
+                        <tr class="hover:bg-darkcard/60 transition">
+                            <td class="border border-gray-700 px-4 py-3">动力架构</td>
+                            <td class="border border-gray-700 px-4 py-3">800V碳化硅增程平台</td>
+                            <td class="border border-gray-700 px-4 py-3">全域800V碳化硅高压电驱、碳纤维机身+桨叶</td>
+                        </tr>
+                        <tr class="hover:bg-darkcard/60 transition">
+                            <td class="border border-gray-700 px-4 py-3">续航与补能</td>
+                            <td class="border border-gray-700 px-4 py-3">综合续航＞1000km；可支持飞行体6次完整补能起飞</td>
+                            <td class="border border-gray-700 px-4 py-3">单次飞行续航约30km，巡航速度约70km/h，垂直起降</td>
+                        </tr>
+                        <tr class="hover:bg-darkcard/60 transition">
+                            <td class="border border-gray-700 px-4 py-3">驱动形式</td>
+                            <td class="border border-gray-700 px-4 py-3">6×6全轮驱动+后轮转向，带主动悬架</td>
+                            <td class="border border-gray-700 px-4 py-3">分布式六轴电推进、全域系统冗余</td>
+                        </tr>
+                        <tr class="hover:bg-darkcard/60 transition">
+                            <td class="border border-gray-700 px-4 py-3">核心特色</td>
+                            <td class="border border-gray-700 px-4 py-3">后置集成自动收纳舱、高精度自动对接分合机构</td>
+                            <td class="border border-gray-700 px-4 py-3">单杆操纵，支持手动/自动双模式飞行</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="mt-8">
+                <iframe width="100%" height="480" src="https://player.bilibili.com/player.html?isOutside=true&aid=277515841&bvid=BV12w411F7Fz&cid=1309595025&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" class="rounded-lg shadow-xl max-w-full" title="小鹏陆地航母演示视频"></iframe>
+                <p class="text-gray-400 text-sm mt-2">视频：小鹏陆地航母演示视频</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 区块3：子系统拆解 -->
+    <section id="subsystem" class="max-w-7xl mx-auto px-4 py-24 fade-in">
+        <h2 class="text-3xl font-bold text-white border-l-4 border-xpeng pl-4 mb-10">子系统拆解</h2>
+        <div class="mb-10">
+            <h3 class="text-xl font-semibold text-white mb-4">系统总架构</h3>
+            <p class="leading-relaxed mb-4">
+                陆地航母不是一台单一飞行器，是一套异构组合式出行系统，分为【陆行母舰子系统】、【飞行体eVTOL子系统】、【自动对接分合控制子系统】三大子系统，子系统之间可以物理分离、独立工作，也可以锁定联动、协同补能、转运。
+            </p>
+            <img src="images/2.jpg" alt="系统架构框图" class="rounded-xl shadow-lg w-full">
+            <p class="text-gray-400 text-sm mt-2">图：系统架构框图（陆行体 ↔ 自动分合机构 ↔ 飞行体，信号链路+机械链路）</p>
+        </div>
+
+       <div class="grid md:grid-cols-2 gap-8 mb-10">
+    <div class="bg-darkcard p-6 rounded-xl shadow-lg">
+        <h3 class="text-xl font-semibold text-white mb-4">子系统1：陆行母舰（陆行载体与移动补能平台）</h3>
+        <ul class="space-y-3 text-gray-300">
+            <li>• 车身与底盘子系统：三轴六轮底盘，6×6全驱+后轮转向、六轮主动双缓冲悬架，兼顾城市铺装路面与轻度越野；车身为乘用车合规结构，前舱4人乘员空间，后舱是定制化封闭式机库，机库内部集成定位、锁止、导向、充电接口；整车尺寸符合机动车法规，可正常上牌上路。</li>
+            <li>• 增程动力与800V高压补能子系统：800V碳化硅增程平台，自带发电单元；陆行过程中可同步给收纳在内的飞行体大功率充电，实现“边开车边给飞机补能”，解决eVTOL固定场站充电依赖问题。</li>
+            <li>• 舱门与机械执行子系统：上掀式大开口机库舱门、内部导向滑轨、定位支撑机构。</li>
+        </ul>
+    </div>
+
+    <div class="bg-darkcard p-6 rounded-xl shadow-lg">
+        <h3 class="text-xl font-semibold text-white mb-4">子系统2：折叠eVTOL飞行体子系统</h3>
+        <ul class="space-y-3 text-gray-300">
+            <li>• 气动与结构子系统：六轴六桨+双涵道复合构型，桨叶、机臂支持电动折叠；主体碳纤维复合材料，轻量化；270°全景载人座舱；起落架可收放。</li>
+            <li>• 分布式电推进子系统：6套独立电机、电调、涵道单元，动力通道相互独立。</li>
+            <li>• 感知与飞控子系统：多源融合定位、3D视觉环境感知、避障传感器阵列；三余度飞控计算机、通信链路、供电系统。</li>
+            <li>• 人机操纵子系统：自研单杆操纵器，手动模式一杆完成升降、前后、横滚、航向；自动模式支持一键起飞、航线规划、自动返航、自动降落对接。</li>
+        </ul>
+    </div>
+</div>
+
+<div class="bg-darkcard p-6 rounded-xl shadow-lg mb-10">
+    <h3 class="text-xl font-semibold text-white mb-4">子系统3：自动分离/对接锁止子系统（标志性子系统）</h3>
+    <p class="leading-relaxed text-gray-300">
+        整套系统包含8大控制模块（桨叶位置控制、旋翼折叠控制、尾舱门控制、陆行底盘控制、高度控制、拖拽控制、起落架、锁止机构）、14组独立作动器；支持手机/车机一键触发，全程自动化，5分钟完成收纳/释放；核心是高精度相对定位、运动协同控制，陆行体调整姿态对准飞行体，飞行体无需自主移动即可完成入库锁止；锁止后悬架缓冲隔离路面振动，保护飞行器精密结构。
+    </p>
+</div>
+
+            </iframe><iframe width="100%" height="480" src="https://player.bilibili.com/player.html?isOutside=true&aid=114341793760802&bvid=BV1TNoFYfEP8&cid=29430318066&p=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" class="rounded-lg shadow-xl max-w-full" title="小鹏陆地航母演示视频"></iframe>
+            <p class="text-gray-400 text-sm mt-2">视频：实拍讲解母舰、机库、飞行体收纳逻辑</p>
+        </div>
+    </section>
+
+    <!-- 区块4：核心关键技术深度调研分析 -->
+    <section id="tech" class="max-w-7xl mx-auto px-4 py-24 fade-in">
+        <h2 class="text-3xl font-bold text-white border-l-4 border-xpeng pl-4 mb-10">核心关键技术深度调研分析</h2>
+        <div class="space-y-8">
+            <div class="bg-darkcard p-6 rounded-xl shadow-lg">
+                <h3 class="text-xl font-semibold text-xpeng mb-3">车载自动分合对接技术（行业首创）</h3>
+                <p class="leading-relaxed">
+                    传统eVTOL必须依靠独立起降坪、吊装设备转运；陆地航母这套机构把“飞行器转运、停放、固定、充电”集成到乘用车内部。难点：陆行体是地面移动刚体，飞行体是轻量航空结构，对接时位置、姿态、角度容错极小；需要底盘主动调平、视觉+激光联合定位、多作动器同步协同。
+                    <br><br>创新价值：消除eVTOL对固定vertiport垂直起降港的强依赖，飞行器可以跟随车辆抵达野外、景区、应急点位。
+                    <br><br>局限：机械作动机构数量多，增加重量、故障点、维护成本；对粉尘、野外环境可靠性要求高。
+                </p>
+            </div>
+            <div class="bg-darkcard p-6 rounded-xl shadow-lg">
+                <h3 class="text-xl font-semibold text-xpeng mb-3">全域800V碳化硅高压电平台（陆+空双平台共用）</h3>
+                <p class="leading-relaxed">
+                    陆行母舰、飞行体统一800V碳化硅高压架构；碳化硅器件降低开关损耗、提升快充功率、减小电控体积重量；飞行体属于航空级高压系统，同时要满足汽车和航空两套安全绝缘规范。
+                    <br><br>收益：快充速度提升、系统能效更高；陆行体发电直接对接飞行体高压电池，省去二次电压转换损耗。
+                    <br><br>痛点：航空高压绝缘、电弧防护、热失控抑制难度高于普通新能源车。
+                </p>
+            </div>
+            <div class="bg-darkcard p-6 rounded-xl shadow-lg">
+                <h3 class="text-xl font-semibold text-xpeng mb-3">六轴六桨双涵道分布式电推进+全域冗余安全技术</h3>
+                <p class="leading-relaxed">
+                    区别于纯多旋翼eVTOL，涵道保护桨叶，提升低空城市环境安全性；6套独立动力通道，任意单台动力失效，飞控重构控制律维持稳定飞行；飞控、供电、通信、操纵均做冗余备份。
+                    <br><br>对比：Joby倾转旋翼侧重高速巡航；亿航EH216是无涵道纯多旋翼；陆地航母涵道构型优先保证低空低速载人安全，适合近距低空飞行。
+                    <br><br>局限：涵道在高速下气动阻力更大，因此定位为短途低空出行，不追求长距离高速。
+                </p>
+            </div>
+            <div class="bg-darkcard p-6 rounded-xl shadow-lg">
+                <h3 class="text-xl font-semibold text-xpeng mb-3">自研单杆操纵+空中智能飞控技术</h3>
+                <p class="leading-relaxed">
+                    行业常规载人飞行器操纵复杂、学习周期长；小鹏汇天四轴合一单杆，简化操作；搭配蜻蜓3D视觉、AI空中感知，实现自动航线、避障、辅助降落。
+                    <br><br>价值：降低用户上手门槛，是面向C端个人用户的关键技术；但空中自动驾驶适航认证难度极高，国内低空空域规则对自动飞行限制严格。
+                </p>
+            </div>
+            <div class="bg-darkcard p-6 rounded-xl shadow-lg">
+                <h3 class="text-xl font-semibold text-xpeng mb-3">轻量化碳纤维复合材料成型技术</h3>
+                <p class="leading-relaxed">
+                    自动化RTM工艺制造桨叶、机身结构；复材占比高，控制飞行体重量（约700kg级），在有限电池能量下保证载重与航程；同时兼顾航空强度、抗疲劳、抗冲击要求。
+                    <br><br>痛点：复材量产成本高，缺陷检测、维修体系和汽车行业完全不同。
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 区块5：技术可行性分析 -->
+    <section id="feasibility-tech" class="max-w-7xl mx-auto px-4 py-24 fade-in">
+        <h2 class="text-3xl font-bold text-white border-l-4 border-xpeng pl-4 mb-10">技术可行性分析</h2>
+        <div class="grid md:grid-cols-2 gap-8">
+            <div class="bg-darkcard p-6 rounded-xl shadow-lg">
+                <h3 class="text-xl font-semibold text-white mb-4">可行支撑点</h3>
+                <ul class="space-y-3 text-gray-300">
+                    <li>分合机构：已经完成多次公开演示、航展载人试飞，机构时序、定位、锁止逻辑已经工程验证；</li>
+                    <li>电推进、碳化硅电控：小鹏汽车在800V高压电车积累成熟供应链，航空版本做升级复用；</li>
+                    <li>冗余飞控：分布式多旋翼eVTOL冗余方案在亿航、Joby等产品上已经验证，成熟理论支撑；</li>
+                    <li>分体架构本身规避了一体式飞行汽车最难的矛盾：一体式要同时满足汽车碰撞法规+航空适航，两套标准冲突极大；分体方案把地面、空中单元分开认证，是非常巧妙的工程路线取舍。</li>
+                </ul>
+            </div>
+            <div class="bg-darkcard p-6 rounded-xl shadow-lg">
+                <h3 class="text-xl font-semibold text-white mb-4">当前技术瓶颈</h3>
+                <ul class="space-y-3 text-gray-300">
+                    <li>电池能量密度瓶颈：30km级短途，适合点到点接驳，无法长距离飞行；低温、大风、载重后实际航程衰减明显；航空电池热安全标准严苛；</li>
+                    <li>机械可靠性：自动分合机构、滑轨、锁止、折叠关节属于“汽车+航空交叉部件”，缺少长期野外耐久数据；</li>
+                    <li>空中感知与复杂环境：城市楼宇、电线、湍流、GPS拒止环境下的定位与避障；</li>
+                    <li>适航双体系：陆行体走机动车法规，飞行体走民航适航，两套认证并行，周期漫长；</li>
+                    <li>噪声：涵道多旋翼低空噪声依然是城市落地的阻碍。</li>
+                </ul>
+            </div>
+        </div>
+        <div class="mt-8 p-6 rounded-xl bg-xpeng/10 border border-xpeng/40">
+            <h3 class="text-xl font-semibold text-white mb-3">可行性结论</h3>
+            <p class="text-lg">
+                <strong>技术路线具备工程可行性，样机阶段已经跑通；但距离大规模、高可靠、低成本量产，仍有大量耐久、适航、电池工程问题待突破。</strong>
+            </p>
+        </div>
+    </section>
+
+    <!-- 区块6：应用场景 -->
+    <section id="scenario" class="max-w-7xl mx-auto px-4 py-24 fade-in">
+        <h2 class="text-3xl font-bold text-white border-l-4 border-xpeng pl-4 mb-10">应用场景</h2>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="bg-darkcard rounded-xl overflow-hidden shadow-lg hover:shadow-xpeng/20 transition-shadow">
+                <img src="https://picsum.photos/id/1036/600/350" alt="文旅低空游览" class="w-full h-48 object-cover">
+                <div class="p-5">
+                    <h3 class="text-lg font-semibold text-white mb-2">高端文旅、景区低空游览</h3>
+                    <p class="text-gray-300 text-sm">自驾母舰抵达营地，释放飞行体，俯瞰山水、海岛、峡谷；配套飞行营地网络，小鹏已签约大量低空营地。</p>
+                </div>
+            </div>
+            <div class="bg-darkcard rounded-xl overflow-hidden shadow-lg hover:shadow-xpeng/20 transition-shadow">
+                <img src="https://picsum.photos/id/1043/600/350" alt="应急救援" class="w-full h-48 object-cover">
+                <div class="p-5">
+                    <h3 class="text-lg font-semibold text-white mb-2">应急救援、医疗转运、巡检</h3>
+                    <p class="text-gray-300 text-sm">陆行母舰可越野抵达普通救护车难以到达的偏远点位，释放飞行体快速转运伤员、物资、电力/油气巡检。</p>
+                </div>
+            </div>
+            <div class="bg-darkcard rounded-xl overflow-hidden shadow-lg hover:shadow-xpeng/20 transition-shadow">
+                <img src="https://picsum.photos/id/1048/600/350" alt="商务接驳" class="w-full h-48 object-cover">
+                <div class="p-5">
+                    <h3 class="text-lg font-semibold text-white mb-2">高端商务、跨片区短途接驳</h3>
+                    <p class="text-gray-300 text-sm">地面开车到起降点，空中避开拥堵，适合城市群近郊短距离通勤（30km半径内）。</p>
+                </div>
+            </div>
+            <div class="bg-darkcard rounded-xl overflow-hidden shadow-lg hover:shadow-xpeng/20 transition-shadow">
+                <img src="https://picsum.photos/id/1064/600/350" alt="私人休闲出行" class="w-full h-48 object-cover">
+                <div class="p-5">
+                    <h3 class="text-lg font-semibold text-white mb-2">高净值个人休闲出行</h3>
+                    <p class="text-gray-300 text-sm">作为高端立体出行工具，适合飞行爱好者、私人低空出行；首批订单以B端机构、中东海外运营商为主。</p>
+                </div>
+            </div>
+        </div>
+        <p class="mt-8 text-center text-gray-400">补充说明：定位不是替代私家车日常通勤，优先落地B端场景，C端私人是长期目标</p>
+    </section>
+
+    <!-- 区块7：市场可行性与商业化研判 -->
+    <section id="market" class="max-w-7xl mx-auto px-4 py-24 fade-in">
+        <h2 class="text-3xl font-bold text-white border-l-4 border-xpeng pl-4 mb-10">市场可行性与商业化研判</h2>
+        <div class="grid md:grid-cols-2 gap-8">
+            <div class="bg-darkcard p-6 rounded-xl shadow-lg">
+                <h3 class="text-xl font-semibold text-white mb-4">市场利好因素</h3>
+                <ul class="space-y-3 text-gray-300">
+                    <li>• 国内低空经济政策放开，低空空域改革持续推进，多地开放低空试点；</li>
+                    <li>• 分体路线差异化：市面上绝大多数eVTOL只有飞行器，缺少转运、停放、补能方案，陆地航母形成独特卖点；</li>
+                    <li>• 供应链复用小鹏汽车成熟的电驱、碳化硅、智能座舱供应链，相比纯航空企业具备成本优势；</li>
+                    <li>• 海外市场（中东等）对低空出行、观光飞行器需求旺盛，已有大额意向订单。</li>
+                </ul>
+            </div>
+            <div class="bg-darkcard p-6 rounded-xl shadow-lg">
+                <h3 class="text-xl font-semibold text-white mb-4">市场风险与约束</h3>
+                <ul class="space-y-3 text-gray-300">
+                    <li>• 价格门槛：预估售价百万级别，受众极小；属于小众高端装备，不是大众交通工具；</li>
+                    <li>• 空域约束：不是买了就能飞，需要起降点位、空域报备、飞行执照、监管体系；</li>
+                    <li>• 商业模式：意向订单≠交付订单，eVTOL行业普遍意向转化率偏低；早期收入来自B端文旅、租赁、运营，而不是直接零售；</li>
+                    <li>• 竞争格局：同行路线分化——亿航：无人驾驶、简单多旋翼、优先适航；Joby：倾转旋翼、长航程；Lilium涵道；陆地航母独特的“母舰+移动机库”是差异化赛道，但赛道本身市场容量有限。</li>
+                </ul>
+            </div>
+        </div>
+        <div class="mt-8 p-6 rounded-xl bg-xpeng/10 border border-xpeng/40">
+            <h3 class="text-xl font-semibold text-white mb-3">市场结论</h3>
+            <p class="text-lg">
+                <strong>商业化路径可行，但属于小众高端市场，短期（2026-2030）以B端运营、文旅、应急为主；C端个人普及是长期远景，依赖空域政策、适航、电池成本三重突破。</strong>
+            </p>
+        </div>
+    </section>
+
+    <!-- 区块8：行业对比 & 总结展望 -->
+    <section id="summary" class="max-w-7xl mx-auto px-4 py-24 fade-in">
+        <h2 class="text-3xl font-bold text-white border-l-4 border-xpeng pl-4 mb-10">行业对比 & 总结展望</h2>
+        <div class="overflow-x-auto mb-10">
+            <table class="w-full border-collapse">
+                <thead>
+                    <tr class="bg-darkcard">
+                        <th class="border border-gray-700 px-4 py-3 text-left">产品</th>
+                        <th class="border border-gray-700 px-4 py-3 text-left">构型</th>
+                        <th class="border border-gray-700 px-4 py-3 text-left">核心路线</th>
+                        <th class="border border-gray-700 px-4 py-3 text-left">优势</th>
+                        <th class="border border-gray-700 px-4 py-3 text-left">短板</th>
+                    </tr>
+                </thead>
+                <tbody class="text-sm">
+                    <tr class="hover:bg-darkcard/60 transition">
+                        <td class="border border-gray-700 px-4 py-3">小鹏陆地航母</td>
+                        <td class="border border-gray-700 px-4 py-3">分体式（母舰+六轴涵道eVTOL）</td>
+                        <td class="border border-gray-700 px-4 py-3">移动机库+自主收纳转运</td>
+                        <td class="border border-gray-700 px-4 py-3">可随车转运、自带补能、起降点灵活</td>
+                        <td class="border border-gray-700 px-4 py-3">航程短、机构复杂</td>
+                    </tr>
+                    <tr class="hover:bg-darkcard/60 transition">
+                        <td class="border border-gray-700 px-4 py-3">亿航EH216-S</td>
+                        <td class="border border-gray-700 px-4 py-3">一体式纯多旋翼</td>
+                        <td class="border border-gray-700 px-4 py-3">全自动无人驾驶</td>
+                        <td class="border border-gray-700 px-4 py-3">结构简单、国内载人适航证</td>
+                        <td class="border border-gray-700 px-4 py-3">无地面行驶能力，依赖场站</td>
+                    </tr>
+                    <tr class="hover:bg-darkcard/60 transition">
+                        <td class="border border-gray-700 px-4 py-3">Joby S4</td>
+                        <td class="border border-gray-700 px-4 py-3">一体式全倾转旋翼</td>
+                        <td class="border border-gray-700 px-4 py-3">高速长航程空中出租车</td>
+                        <td class="border border-gray-700 px-4 py-3">巡航效率高、航程大</td>
+                        <td class="border border-gray-700 px-4 py-3">必须配套垂直起降港，转运困难</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="bg-darkcard p-6 rounded-xl shadow-lg">
+            <h3 class="text-xl font-semibold text-white mb-4">总结</h3>
+            <p class="leading-relaxed">
+                陆地航母的核心创新，不在于飞行器本身，而在于重构了eVTOL的使用配套体系，把机库、充电、转运集成到一台合法上路汽车中，解决了eVTOL落地最大的配套痛点。它代表国内低空经济一条很有特色的技术路线；未来迭代方向：更高能量密度电池、轻量化机构、更低噪声、全国低空航线网络、简化适航流程。
+            </p>
+        </div>
+    </section>
+
+    <!-- 区块9：参考文献与资料来源 -->
+    <section id="reference" class="max-w-7xl mx-auto px-4 py-24 fade-in">
+        <h2 class="text-3xl font-bold text-white border-l-4 border-xpeng pl-4 mb-10">参考文献与资料来源</h2>
+        <div class="bg-darkcard p-6 rounded-xl shadow-lg">
+            <ol class="list-decimal pl-5 space-y-2 text-gray-300">
+                <li>小鹏汇天官方新闻、珠海航展、广州车展官方发布资料</li>
+                <li>XPENG AEROHT Land Aircraft Carrier 官方白皮书PDF</li>
+                <li>21世纪经济报道、中国经营报低空经济行业分析</li>
+                <li>公开试飞视频、航展直播素材</li>
+            </ol>
+            <p class="mt-6 text-gray-400 text-sm">备注：所有图片、视频均为公开对外发布素材，用于学术调研展示，非商用。</p>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="bg-darkcard py-10 text-center text-gray-400 text-sm">
+        <p>本页面为学生调研分析项目，仅用于学术研究，所有知识产权归小鹏汇天所有</p>
+        <p class="mt-2">Github Pages 公共仓库展示</p>
+    </footer>
+
+    <!-- JS：移动端菜单 + 滚动渐入动画 -->
+    <script>
+        // 移动端菜单
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        menuBtn.addEventListener('click', ()=>{
+            mobileMenu.classList.toggle('hidden');
+        })
+        mobileMenu.querySelectorAll('a').forEach(link=>{
+            link.onclick = ()=> mobileMenu.classList.add('hidden');
+        })
+
+        // 滚动渐入
+        const fadeElements = document.querySelectorAll('.fade-in');
+        const observer = new IntersectionObserver((entries)=>{
+            entries.forEach(entry=>{
+                if(entry.isIntersecting){
+                    entry.target.classList.add('active');
+                }
+            })
+        }, {threshold:0.15})
+        fadeElements.forEach(el=> observer.observe(el));
+    </script>
+</body>
+</html>
